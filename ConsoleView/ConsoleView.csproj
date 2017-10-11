@@ -10,12 +10,18 @@
     <PackageTags>console, text</PackageTags>
     <Description>Simple C# Console View Helper</Description>
     <SynchReleaseVersion>false</SynchReleaseVersion>
+    <PackageId>ConsoleView</PackageId>
+    <Owners>Jose Jimenez, Quinn (Qin) Liu , Don Pham , John Gaines </Owners>
+    <PackageReleaseNotes>Initial</PackageReleaseNotes>
+    <Summary>Simple C# Console View Helper</Summary>
+    <Title>Console View CSharp</Title>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NuGet.Build.Packaging" Version="0.1.276" />
+    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.0" />
+    <PackageReference Include="NuGet.Build" Version="2.12.0" />
   </ItemGroup>
 </Project>
