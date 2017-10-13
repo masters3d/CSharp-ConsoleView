@@ -114,7 +114,13 @@ namespace ConsoleView
 
     public struct ConsoleText
     {
-        private List<ConsoleChar> list;
+        public List<ConsoleChar> list;
+
+
+        public ConsoleText(List<ConsoleChar> list)
+        {
+            this.list = list;
+        }
 
         public int GetCount()
         {
@@ -149,7 +155,39 @@ namespace ConsoleView
         public int positionY;
         public List<ConsoleText> list;
 
-    }
+        public ConsoleBox(List<ConsoleText> list, int positionX = 0, int positionY = 0)
+        {
+            this.positionX = positionX;
+            this.positionY = positionY;
+            this.list = list;
+        }
 
+        public ConsoleBox(string text, int width, int height, ConsoleColor bgColor, ConsoleColor textColor, int positionX = 0, int positionY = 0)
+        {
+            this.positionX = positionX;
+            this.positionY = positionY;
+
+            List<ConsoleText> listToSave = new List<ConsoleText>();
+            var wrappedTextList = Display.Wrap(text, width);
+
+            for (var i = 0; i < height; i += 1)
+            {
+                if (i > wrappedTextList.Count - 1)
+                {
+                    var consoleText = new ConsoleText();
+                    consoleText.Append("".PadRight(width), bgColor, textColor);
+                    listToSave.Add(consoleText);
+                }
+                else
+                {
+                    var consoleText = new ConsoleText();
+                    consoleText.Append(wrappedTextList[i].PadRight(width), bgColor, textColor);
+                    listToSave.Add(consoleText);
+                }
+            }
+            this.list = listToSave;
+
+        }
+    }
 }
 

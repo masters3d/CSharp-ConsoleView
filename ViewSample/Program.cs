@@ -27,6 +27,11 @@ namespace ViewSample
                 } else if (response == "draw")
                 {
                     var view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.drawOnSingleView);
+
+                    var newBox = new ConsoleBox("Hello I am a box", 20, 20, ConsoleColor.White, ConsoleColor.Red);
+
+                    view.AddToDrawingArea(newBox);
+
                     response = view.UpdateScreenAndGetInput();
 
                 } else 

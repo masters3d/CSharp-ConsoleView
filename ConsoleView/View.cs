@@ -78,6 +78,34 @@ namespace ConsoleView
             Title = input;
         }
 
+        public void AddToDrawingArea(ConsoleBox box)
+        {
+
+            var toEdit = AreaA.consoleBox;
+            var toEditWidth = AreaA.consoleBox[0].GetCount();
+            var line = box.positionY;
+            var column = box.positionX;
+            var boxWidth = box.list[0].GetCount();
+            var boxHeight = box.list.Count;
+
+            for (var i = line; i < boxHeight; i += 1)
+            {
+                var partA = toEdit[i].list.GetRange(0, column);
+                var partB = box.list[i - line].list;
+                var partC = toEdit[i].list.GetRange(column + boxWidth, toEditWidth - (column + boxWidth));
+                var temp = new List<ConsoleChar>();
+
+                temp.AddRange(partA);
+                temp.AddRange(partB);
+                temp.AddRange(partC);
+
+                toEdit[i] = new ConsoleText(temp);
+
+            }
+
+
+        }
+
         public void SetArea(String title, String input, Area area)
         {
             var toDisplay1 =  Display.Wrap(title, GetTextBox(area).GetWidth());
