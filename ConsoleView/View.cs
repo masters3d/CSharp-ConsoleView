@@ -10,15 +10,19 @@ namespace ConsoleView
         private Display display = new Display();
 
         private String Title;
+        private ConsoleColor TitleTextColor = ConsoleColor.White;
+        private ConsoleColor TitleBgColor = ConsoleColor.DarkRed;
+        public int TitleHeight = 2;
+
         private TextBox AreaA;
 		private TextBox AreaB;
 		private TextBox AreaC;
-        private ViewType type;
+        private TextBox AreaD;
+        private ViewLayoutType type;
 
         public int width;
         public int height;
 
-        public int titleHeight = 3;
 
 
 		// This is used for setting the bash command window size on non WinOS
@@ -120,6 +124,10 @@ namespace ConsoleView
 					areaToEdit = AreaC;
 					AreaC = new TextBox(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
 					break;
+                case TextBoxArea.D:
+                    areaToEdit = AreaD;
+                    AreaD = new TextBox(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
+                    break;
                 default:
                     areaToEdit = new TextBox(dummyTexBox: true);
                     break;
@@ -139,11 +147,12 @@ namespace ConsoleView
 			if (display.CommandHistory.Count == 0 && RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 			{
 				system(@"printf '\e[8;" + this.height + ";" + this.width + "t';");
-			}
+            }
 
-            if (type == ViewType.twoStackOneLong) {
+            display.Show(Title.PadRight(this.width), TitleTextColor, TitleBgColor);
 
-                display.Show(Title.PadRight(this.width), ConsoleColor.DarkRed, ConsoleColor.White);
+
+            if (type == ViewLayoutType.twoStackOneLong) {
 
 				for (var i = 0; i < AreaA.height; i += 1)
 				{
@@ -162,13 +171,33 @@ namespace ConsoleView
 				return display.CommandPrompt();
             }
 
+            if (type == ViewLayoutType.singleView)
+            {
+                foreach(var each in AreaA.processedTextList)
+                {
+                    display.Show(each, AreaA.textColor, AreaA.bgColor);
+                }
+                return display.CommandPrompt();
+            }
+
+
             display.Show("View Set Up not Supported");
             return "Quit";
         }
 
-        public View(string title, List<string> textA, List<string> textB, List<string> textC, ViewType viewType = ViewType.twoStackOneLong )
+        public View(string title, List<string> textA = null, List<string> textB = null, List<string> textC = null, List<string> textD = null,  ViewLayoutType viewLayoutType = ViewLayoutType.twoStackOneLong, int width = 100, int height = 30)
         {
-            if (viewType == ViewType.twoStackOneLong)
+            textA = textA ?? new List<string>();
+            textB = textB ?? new List<string>();
+            textC = textC ?? new List<string>();
+            textD = textD ?? new List<string>();
+
+            type = viewLayoutType;
+            Title = title;
+            this.width = width;
+            this.height = height + this.TitleHeight;
+
+            if (viewLayoutType == ViewLayoutType.twoStackOneLong)
             {
                 //+--------Title---------------- +
                 //+-----------------------------+
@@ -183,19 +212,17 @@ namespace ConsoleView
                 //+---------------+-------------+
                 //+--------------Command-------- +
 
+                int sixtyWidth = (int)Math.Ceiling(0.6 * width);
+                int fortyWidth = (int)Math.Ceiling(0.4 * width);
+                int fiftyHeight = (int) Math.Ceiling(0.5 * height);
+                AreaA = new TextBox(sixtyWidth, fiftyHeight, textA, ConsoleColor.White, ConsoleColor.DarkGreen);
+                AreaB = new TextBox(fortyWidth, height, textB, ConsoleColor.White, ConsoleColor.DarkBlue);
+                AreaC = new TextBox(sixtyWidth, fiftyHeight, textC, ConsoleColor.White, ConsoleColor.Black);
+            }
 
-                AreaA = new TextBox(60, 15, textA, ConsoleColor.White, ConsoleColor.DarkGreen);
-                AreaB = new TextBox(40, 30, textB, ConsoleColor.White, ConsoleColor.DarkBlue);
-                AreaC = new TextBox(60, 15, textC, ConsoleColor.White, ConsoleColor.Black);
-                type = viewType;
-                Title = title;
-
-                var windowWidth = AreaA.width + AreaB.width;
-                var windowHeight = AreaB.height + this.titleHeight;
-
-                width = windowWidth;
-                height = windowHeight;
-
+            if (viewLayoutType == ViewLayoutType.singleView)
+            {
+                AreaA = new TextBox(width, height, textA, ConsoleColor.White, ConsoleColor.DarkGreen);
             }
         }
     }
@@ -215,7 +242,6 @@ public struct TextBox
         width = height = 10;
         processedTextList = sourceText = new List<string>();
         textColor = bgColor = ConsoleColor.White;
-
     }
 
     public TextBox(int width, int height, List<string> wrappedTextList, ConsoleColor textColor, ConsoleColor bgColor)
@@ -237,13 +263,12 @@ public struct TextBox
         sourceText = wrappedTextList;
         this.textColor = textColor;
         this.bgColor = bgColor;
-
     }
 }
 
-public enum ViewType
+public enum ViewLayoutType
 {
-    twoStackOneLong
+    twoStackOneLong, singleView
 }
 
 public enum TextBoxArea
