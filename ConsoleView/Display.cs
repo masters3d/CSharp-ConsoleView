@@ -116,6 +116,11 @@ namespace ConsoleView
     {
         private List<ConsoleChar> list;
 
+        public int GetCount()
+        {
+            return list.Count;
+        }
+
         public void Append(string text, ConsoleColor BackgroundColor, ConsoleColor TextColor)
         {
             list = list ?? new List<ConsoleChar>();

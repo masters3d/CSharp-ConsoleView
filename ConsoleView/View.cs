@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
+using ConsoleView;
 
 namespace ConsoleView
 {
@@ -66,6 +66,8 @@ namespace ConsoleView
                     return AreaB;
                 case Area.C:
                     return AreaC;
+                case Area.D:
+                    return AreaD;
                 default:
                     return new WindowArea(dummyTexBox: true);
             }
@@ -78,8 +80,8 @@ namespace ConsoleView
 
         public void SetArea(String title, String input, Area area)
         {
-            var toDisplay1 =  Display.Wrap(title, GetTextBox(area).width);
-            var toDisplay2 = Display.Indent(5, Display.Wrap(input, GetTextBox(area).width - 5));
+            var toDisplay1 =  Display.Wrap(title, GetTextBox(area).GetWidth());
+            var toDisplay2 = Display.Indent(5, Display.Wrap(input, GetTextBox(area).GetWidth() - 5));
 
             toDisplay1.AddRange(toDisplay2);
 
@@ -89,7 +91,7 @@ namespace ConsoleView
 
         public void SetArea(string input, Area area)
         {
-            var wrappedText = Display.Wrap(input, AreaA.width);
+            var wrappedText = Display.Wrap(input, AreaA.GetWidth());
             SetArea(wrappedText, area);
         }
 
@@ -114,19 +116,19 @@ namespace ConsoleView
             {
                 case Area.A:
                     areaToEdit = AreaA;
-					AreaA = new WindowArea(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
+                    AreaA = new WindowArea(areaToEdit.GetWidth(), areaToEdit.GetHeight(), inputList, areaToEdit.textColor, areaToEdit.bgColor);
 					break;
 				case Area.B:
 					areaToEdit = AreaB;
-					AreaB = new WindowArea(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
+                    AreaB = new WindowArea(areaToEdit.GetWidth(), areaToEdit.GetHeight(), inputList, areaToEdit.textColor, areaToEdit.bgColor);
 					break;
 				case Area.C:
 					areaToEdit = AreaC;
-					AreaC = new WindowArea(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
+                    AreaC = new WindowArea(areaToEdit.GetWidth(), areaToEdit.GetHeight(), inputList, areaToEdit.textColor, areaToEdit.bgColor);
 					break;
                 case Area.D:
                     areaToEdit = AreaD;
-                    AreaD = new WindowArea(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
+                    AreaD = new WindowArea(areaToEdit.GetWidth(), areaToEdit.GetHeight(), inputList, areaToEdit.textColor, areaToEdit.bgColor);
                     break;
                 default:
                     areaToEdit = new WindowArea(dummyTexBox: true);
@@ -154,28 +156,37 @@ namespace ConsoleView
 
             if (type == ViewLayoutType.twoStackOneLong) {
 
-				for (var i = 0; i < AreaA.height; i += 1)
+				for (var i = 0; i < AreaA.GetHeight(); i += 1)
 				{
 					display.Output(AreaA.processedTextList[i], AreaA.textColor, AreaA.bgColor);
 					display.Output(AreaB.processedTextList[i], AreaB.textColor, AreaB.bgColor);
 					Console.WriteLine();
 				}
 
-				for (var i = 0; i < AreaC.height; i += 1)
+                for (var i = 0; i < AreaC.GetHeight(); i += 1)
 				{
 					display.Output(AreaC.processedTextList[i], AreaC.textColor, AreaC.bgColor);
-					display.Output(AreaB.processedTextList[i + AreaA.height], AreaB.textColor, AreaB.bgColor);
+                    display.Output(AreaB.processedTextList[i + AreaA.GetHeight()], AreaB.textColor, AreaB.bgColor);
 					Console.WriteLine();
 				}
 
 				return display.CommandPrompt();
             }
 
-            if (type == ViewLayoutType.singleView || type == ViewLayoutType.drawOnSingleView) 
+            if (type == ViewLayoutType.singleView) 
             {
                 foreach(var each in AreaA.processedTextList)
                 {
                     display.Show(each, AreaA.textColor, AreaA.bgColor);
+                }
+                return display.CommandPrompt();
+            }
+
+            if (type == ViewLayoutType.drawOnSingleView)
+            {
+                foreach(var each in AreaA.consoleBox)
+                {
+                    each.Output(display);
                 }
                 return display.CommandPrompt();
             }
@@ -231,18 +242,61 @@ namespace ConsoleView
 
 public struct WindowArea
 {
-    public int width;
-    public int height;
+    private int width;
+    private int height;
     public List<string> processedTextList;
     public List<String> sourceText;
     public ConsoleColor textColor;
     public ConsoleColor bgColor;
+    public List<ConsoleText> consoleBox;
+
+    public int GetWidth()
+    {
+        return width;
+    }
+
+    public int GetHeight()
+    {
+        return height;
+    }
+
+
+    static private List<ConsoleText> Process(List<String> list, ConsoleColor textColor, ConsoleColor bgColor)
+    {
+        var result = new List<ConsoleText>();
+        foreach(var each in list)
+        {
+            var consoleText = new ConsoleText();
+            consoleText.Append(each, bgColor, textColor);
+            result.Add(consoleText);
+        }
+        return result;
+    }
+
+    public WindowArea(List<ConsoleText> consoleBox)
+    {
+        consoleBox = consoleBox ?? new List<ConsoleText>();
+
+        this.width = this.height = 0;
+        this.consoleBox = consoleBox;
+        processedTextList = sourceText = new List<string>();
+        textColor = bgColor = ConsoleColor.White;
+
+        if (consoleBox.Count > 0)
+        {
+            this.width = consoleBox[0].GetCount();
+            this.height = consoleBox.Count;
+        }
+
+    }
 
     public WindowArea(bool dummyTexBox = true)
     {
         width = height = 10;
         processedTextList = sourceText = new List<string>();
         textColor = bgColor = ConsoleColor.White;
+        this.consoleBox = WindowArea.Process(processedTextList, textColor, bgColor);
+
     }
 
     public WindowArea(int width, int height, List<string> wrappedTextList, ConsoleColor textColor, ConsoleColor bgColor)
@@ -264,6 +318,7 @@ public struct WindowArea
         sourceText = wrappedTextList;
         this.textColor = textColor;
         this.bgColor = bgColor;
+        this.consoleBox = WindowArea.Process(processedText, textColor, bgColor);
     }
 }
 
