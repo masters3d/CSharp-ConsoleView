@@ -14,10 +14,10 @@ namespace ConsoleView
         private ConsoleColor TitleBgColor = ConsoleColor.DarkRed;
         public int TitleHeight = 2;
 
-        private TextBox AreaA;
-		private TextBox AreaB;
-		private TextBox AreaC;
-        private TextBox AreaD;
+        private WindowArea AreaA;
+		private WindowArea AreaB;
+		private WindowArea AreaC;
+        private WindowArea AreaD;
         private ViewLayoutType type;
 
         public int width;
@@ -56,18 +56,18 @@ namespace ConsoleView
 
         }
 
-        public TextBox GetTextBox(TextBoxArea area)
+        public WindowArea GetTextBox(Area area)
         {
             switch (area)
             {
-                case TextBoxArea.A:
+                case Area.A:
                     return AreaA;
-                case TextBoxArea.B:
+                case Area.B:
                     return AreaB;
-                case TextBoxArea.C:
+                case Area.C:
                     return AreaC;
                 default:
-                    return new TextBox(dummyTexBox: true);
+                    return new WindowArea(dummyTexBox: true);
             }
         }
 
@@ -76,7 +76,7 @@ namespace ConsoleView
             Title = input;
         }
 
-        public void SetArea(String title, String input, TextBoxArea area)
+        public void SetArea(String title, String input, Area area)
         {
             var toDisplay1 =  Display.Wrap(title, GetTextBox(area).width);
             var toDisplay2 = Display.Indent(5, Display.Wrap(input, GetTextBox(area).width - 5));
@@ -87,13 +87,13 @@ namespace ConsoleView
 		}
 
 
-        public void SetArea(string input, TextBoxArea area)
+        public void SetArea(string input, Area area)
         {
             var wrappedText = Display.Wrap(input, AreaA.width);
             SetArea(wrappedText, area);
         }
 
-        public void SetArea(string title, List<String> inputListToEdit, TextBoxArea area, int indent = 5, bool spaceBetween = true )
+        public void SetArea(string title, List<String> inputListToEdit, Area area, int indent = 5, bool spaceBetween = true )
         {
             var inputList = Display.Indent(indent, inputListToEdit);
 			if (spaceBetween)
@@ -105,31 +105,31 @@ namespace ConsoleView
 			SetArea(inputList, area);
 		}
 
-        public void SetArea(List<String> inputList, TextBoxArea area)
+        public void SetArea(List<String> inputList, Area area)
 		{
-            TextBox areaToEdit;
+            WindowArea areaToEdit;
 
 
             switch (area) 
             {
-                case TextBoxArea.A:
+                case Area.A:
                     areaToEdit = AreaA;
-					AreaA = new TextBox(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
+					AreaA = new WindowArea(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
 					break;
-				case TextBoxArea.B:
+				case Area.B:
 					areaToEdit = AreaB;
-					AreaB = new TextBox(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
+					AreaB = new WindowArea(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
 					break;
-				case TextBoxArea.C:
+				case Area.C:
 					areaToEdit = AreaC;
-					AreaC = new TextBox(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
+					AreaC = new WindowArea(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
 					break;
-                case TextBoxArea.D:
+                case Area.D:
                     areaToEdit = AreaD;
-                    AreaD = new TextBox(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
+                    AreaD = new WindowArea(areaToEdit.width, areaToEdit.height, inputList, areaToEdit.textColor, areaToEdit.bgColor);
                     break;
                 default:
-                    areaToEdit = new TextBox(dummyTexBox: true);
+                    areaToEdit = new WindowArea(dummyTexBox: true);
                     break;
             }
 		}
@@ -215,20 +215,20 @@ namespace ConsoleView
                 int sixtyWidth = (int)Math.Ceiling(0.6 * width);
                 int fortyWidth = (int)Math.Ceiling(0.4 * width);
                 int fiftyHeight = (int) Math.Ceiling(0.5 * height);
-                AreaA = new TextBox(sixtyWidth, fiftyHeight, textA, ConsoleColor.White, ConsoleColor.DarkGreen);
-                AreaB = new TextBox(fortyWidth, height, textB, ConsoleColor.White, ConsoleColor.DarkBlue);
-                AreaC = new TextBox(sixtyWidth, fiftyHeight, textC, ConsoleColor.White, ConsoleColor.Black);
+                AreaA = new WindowArea(sixtyWidth, fiftyHeight, textA, ConsoleColor.White, ConsoleColor.DarkGreen);
+                AreaB = new WindowArea(fortyWidth, height, textB, ConsoleColor.White, ConsoleColor.DarkBlue);
+                AreaC = new WindowArea(sixtyWidth, fiftyHeight, textC, ConsoleColor.White, ConsoleColor.Black);
             }
 
             if (viewLayoutType == ViewLayoutType.singleView)
             {
-                AreaA = new TextBox(width, height, textA, ConsoleColor.White, ConsoleColor.DarkGreen);
+                AreaA = new WindowArea(width, height, textA, ConsoleColor.White, ConsoleColor.DarkGreen);
             }
         }
     }
 }
 
-public struct TextBox
+public struct WindowArea
 {
     public int width;
     public int height;
@@ -237,14 +237,14 @@ public struct TextBox
     public ConsoleColor textColor;
     public ConsoleColor bgColor;
 
-    public TextBox(bool dummyTexBox = true)
+    public WindowArea(bool dummyTexBox = true)
     {
         width = height = 10;
         processedTextList = sourceText = new List<string>();
         textColor = bgColor = ConsoleColor.White;
     }
 
-    public TextBox(int width, int height, List<string> wrappedTextList, ConsoleColor textColor, ConsoleColor bgColor)
+    public WindowArea(int width, int height, List<string> wrappedTextList, ConsoleColor textColor, ConsoleColor bgColor)
     {
         var processedText = new List<String>();
         for (var i = 0; i < height; i += 1)
@@ -271,7 +271,7 @@ public enum ViewLayoutType
     twoStackOneLong, singleView
 }
 
-public enum TextBoxArea
+public enum Area
 {
     A, B, C, D
 }

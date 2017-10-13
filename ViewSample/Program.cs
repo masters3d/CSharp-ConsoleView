@@ -23,11 +23,11 @@ namespace ViewSample
                     
                 } else 
                 {
-                    var view = new View("This is Just a sample Title", list, list, list, list, ViewLayoutType.twoStackOneLong);
+                    var view = new View("This view has two stacked areas and one side area ", list, list, list, list, ViewLayoutType.twoStackOneLong);
                     var height = (view.height / 2) - 1;
-                    view.SetArea(view.GetCommandHistory(height), TextBoxArea.A);
-                    view.SetArea(view.GetCommandHistory(height), TextBoxArea.C);
-                    view.SetArea(view.GetCommandHistory(height), TextBoxArea.B);
+                    view.SetArea(view.GetCommandHistory(height), Area.A);
+                    view.SetArea(view.GetCommandHistory(height), Area.C);
+                    view.SetArea(view.GetCommandHistory(height), Area.B);
                     response = view.UpdateScreenAndGetInput();
                 }
 
