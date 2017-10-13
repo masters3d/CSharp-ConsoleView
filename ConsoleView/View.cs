@@ -88,18 +88,18 @@ namespace ConsoleView
             var boxWidth = box.list[0].GetCount();
             var boxHeight = box.list.Count;
 
-            for (var i = line; i < boxHeight; i += 1)
+            for (var i = 0; i < boxHeight; i += 1)
             {
-                var partA = toEdit[i].list.GetRange(0, column);
-                var partB = box.list[i - line].list;
-                var partC = toEdit[i].list.GetRange(column + boxWidth, toEditWidth - (column + boxWidth));
+                var partA = toEdit[i + line].list.GetRange(0, column);
+                var partB = box.list[i].list;
+                var partC = toEdit[i + line].list.GetRange(column + boxWidth, toEditWidth - (column + boxWidth));
                 var temp = new List<ConsoleChar>();
 
                 temp.AddRange(partA);
                 temp.AddRange(partB);
                 temp.AddRange(partC);
 
-                toEdit[i] = new ConsoleText(temp);
+                toEdit[i + line] = new ConsoleText(temp);
 
             }
 

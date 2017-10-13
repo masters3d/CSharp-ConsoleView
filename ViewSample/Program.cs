@@ -28,9 +28,11 @@ namespace ViewSample
                 {
                     var view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.drawOnSingleView);
 
-                    var newBox = new ConsoleBox("Hello I am a box", 20, 20, ConsoleColor.White, ConsoleColor.Red);
+                    var box1 = new ConsoleBox("Camping Site", 10, 2, ConsoleColor.White, ConsoleColor.Red, 10, 2);
+                    view.AddToDrawingArea(box1);
 
-                    view.AddToDrawingArea(newBox);
+                    var box2 = new ConsoleBox("Hello I am another box", 10, 2, ConsoleColor.White, ConsoleColor.Blue, 10, 10);
+                    view.AddToDrawingArea(box2);
 
                     response = view.UpdateScreenAndGetInput();
 
