@@ -97,7 +97,54 @@ namespace ConsoleView
 			output.Add(str.PadRight(maxWidth));
 			return output;
 		}
+    }
+
+    public struct ConsoleChar
+    {
+       public ConsoleColor BackgroundColor;
+       public ConsoleColor TextColor;
+       public Char Character;
+
+        public void Output(Display display = null)
+        {
+            display = display ?? new Display();
+            display.Output(Character.ToString(),BackgroundColor, TextColor);
+        }
+    }
+
+    public struct ConsoleText
+    {
+        private List<ConsoleChar> list;
+
+        public void Append(string text, ConsoleColor BackgroundColor, ConsoleColor TextColor)
+        {
+            list = list ?? new List<ConsoleChar>();
+
+            foreach( var character in text)
+            {
+                list.Add(new ConsoleChar(){Character = character, BackgroundColor = BackgroundColor, TextColor = TextColor});
+            }
+        }
+
+        public void Output(Display display = null)
+        {
+            display = display ?? new Display();
+
+            foreach (var each in list)
+            {
+                each.Output(display);
+            }
+        }
 
     }
+
+    public struct ConsoleBox
+    {
+        public int positionX;
+        public int positionY;
+        public List<ConsoleText> list;
+
+    }
+
 }
 

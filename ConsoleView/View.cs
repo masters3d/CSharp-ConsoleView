@@ -171,7 +171,7 @@ namespace ConsoleView
 				return display.CommandPrompt();
             }
 
-            if (type == ViewLayoutType.singleView)
+            if (type == ViewLayoutType.singleView || type == ViewLayoutType.drawOnSingleView) 
             {
                 foreach(var each in AreaA.processedTextList)
                 {
@@ -220,10 +220,11 @@ namespace ConsoleView
                 AreaC = new WindowArea(sixtyWidth, fiftyHeight, textC, ConsoleColor.White, ConsoleColor.Black);
             }
 
-            if (viewLayoutType == ViewLayoutType.singleView)
+            if (viewLayoutType == ViewLayoutType.singleView || viewLayoutType == ViewLayoutType.drawOnSingleView )
             {
                 AreaA = new WindowArea(width, height, textA, ConsoleColor.White, ConsoleColor.DarkGreen);
             }
+
         }
     }
 }
@@ -268,10 +269,12 @@ public struct WindowArea
 
 public enum ViewLayoutType
 {
-    twoStackOneLong, singleView
+    twoStackOneLong, singleView, drawOnSingleView
 }
 
 public enum Area
 {
     A, B, C, D
 }
+
+
