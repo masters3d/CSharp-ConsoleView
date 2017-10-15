@@ -16,17 +16,21 @@ namespace ViewSample
 
             do
             {
+
+
                 var commands = @". Avalible Commands: single, draw, three";
 
+                View view;
 
                 if (response == "single")
                 {
-                    var view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.singleView);
+                    view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.singleView);
                     response = view.UpdateScreenAndGetInput();
+
                     
                 } else if (response == "draw")
                 {
-                    var view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.drawOnSingleView);
+                    view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.drawOnSingleView);
 
                     var box1 = new ConsoleBox("Camping Site", 10, 2, ConsoleColor.White, ConsoleColor.Red, 10, 2);
                     view.AddToDrawingArea(box1);
@@ -38,13 +42,14 @@ namespace ViewSample
 
                 } else 
                 {
-                    var view = new View("This view has two stacked areas and one side area " + commands, list, list, list, list, ViewLayoutType.twoStackOneLong);
+                    view = new View("This view has two stacked areas and one side area " + commands, list, list, list, list, ViewLayoutType.twoStackOneLong);
                     var height = (view.height / 2) - 1;
                     view.SetArea(view.GetCommandHistory(height), Area.A);
                     view.SetArea(view.GetCommandHistory(height), Area.C);
                     view.SetArea(view.GetCommandHistory(height), Area.B);
                     response = view.UpdateScreenAndGetInput();
                 }
+                view.display.SetConsoleTitle(commands);
 
             } while (response != "quit");
         }

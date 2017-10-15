@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace ConsoleView
 {
@@ -7,6 +9,68 @@ namespace ConsoleView
     {
         public string LastShow = " ";
         public List<String> CommandHistory = new List<String>();
+
+
+        private string lastConsoleTitle = "";
+        public void SetConsoleTitle(string title)
+        {
+            Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+            title = rgx.Replace(title, "");
+
+            // Only update if content is different
+            if (title == lastConsoleTitle)
+            {
+                return;
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.Title = title;
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                var space = " ";
+                var command = @"printf '\033]0;" + title + space + @"\007'";
+                system(command);
+            }
+
+            lastConsoleTitle = title;
+        }
+
+        public string GetConsoleTitle()
+        {
+            return lastConsoleTitle;
+        }
+
+        // This is used for setting the bash command window size on non WinOS
+        [DllImport("libc")]
+        private static extern int system(string exec);
+
+        private int lastConsoleHeight = 0;
+        private int lastConsoleWidth = 0;
+
+        public void SetConsoleSize(int width, int height)
+        {
+
+            // Only update if the height are going to be diffefent
+            if ( width == lastConsoleWidth && height == lastConsoleHeight)
+            {
+                return;
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.WindowWidth = width;
+                Console.BufferWidth = Console.WindowWidth + 1;
+                Console.BufferHeight = Console.WindowHeight = height;
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                system(@"printf '\e[8;" + height + ";" + width + "t';");
+            }
+        }
 
         private void WriteLine(string text)
         {

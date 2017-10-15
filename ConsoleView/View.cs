@@ -7,7 +7,7 @@ namespace ConsoleView
 {
     public class View
     {
-        private Display display = new Display();
+        public Display display = new Display();
 
         private String Title;
         private ConsoleColor TitleTextColor = ConsoleColor.White;
@@ -22,12 +22,6 @@ namespace ConsoleView
 
         public int width;
         public int height;
-
-
-
-		// This is used for setting the bash command window size on non WinOS
-		[DllImport("libc")]
-		private static extern int system(string exec);
 
 
         public List<String> GetCommandHistory(int lengthLimit, bool reverse = true)
@@ -167,17 +161,7 @@ namespace ConsoleView
         public string UpdateScreenAndGetInput()
         {
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                Console.WindowWidth = this.width;
-                Console.BufferWidth = Console.WindowWidth + 1;
-                Console.BufferHeight = Console.WindowHeight = this.height;
-            }
-
-			if (display.CommandHistory.Count == 0 && RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-			{
-				system(@"printf '\e[8;" + this.height + ";" + this.width + "t';");
-            }
+            display.SetConsoleSize(this.width, this.height);
 
             display.Show(Title.PadRight(this.width), TitleTextColor, TitleBgColor);
 
