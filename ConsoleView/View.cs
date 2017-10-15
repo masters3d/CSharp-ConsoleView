@@ -166,46 +166,50 @@ namespace ConsoleView
             display.Show(Title.PadRight(this.width), TitleTextColor, TitleBgColor);
 
 
-            if (type == ViewLayoutType.twoStackOneLong) {
+            if (type == ViewLayoutType.twoStackOneLong)
+            {
 
-				for (var i = 0; i < AreaA.GetHeight(); i += 1)
-				{
-					display.Output(AreaA.processedTextList[i], AreaA.textColor, AreaA.bgColor);
-					display.Output(AreaB.processedTextList[i], AreaB.textColor, AreaB.bgColor);
-					Console.WriteLine();
-				}
+                for (var i = 0; i < AreaA.GetHeight(); i += 1)
+                {
+                    display.Output(AreaA.processedTextList[i], AreaA.textColor, AreaA.bgColor);
+                    display.Output(AreaB.processedTextList[i], AreaB.textColor, AreaB.bgColor);
+                    Console.WriteLine();
+                }
 
                 for (var i = 0; i < AreaC.GetHeight(); i += 1)
-				{
-					display.Output(AreaC.processedTextList[i], AreaC.textColor, AreaC.bgColor);
+                {
+                    display.Output(AreaC.processedTextList[i], AreaC.textColor, AreaC.bgColor);
                     display.Output(AreaB.processedTextList[i + AreaA.GetHeight()], AreaB.textColor, AreaB.bgColor);
-					Console.WriteLine();
-				}
+                    Console.WriteLine();
+                }
 
-				return display.CommandPrompt();
             }
+            else
 
-            if (type == ViewLayoutType.singleView) 
+            if (type == ViewLayoutType.singleView)
             {
-                foreach(var each in AreaA.processedTextList)
+                foreach (var each in AreaA.processedTextList)
                 {
                     display.Show(each, AreaA.textColor, AreaA.bgColor);
                 }
-                return display.CommandPrompt();
             }
+            else
 
             if (type == ViewLayoutType.drawOnSingleView)
             {
-                foreach(var each in AreaA.consoleBox)
+                foreach (var each in AreaA.consoleBox)
                 {
                     each.Output(display);
                 }
-                return display.CommandPrompt();
+            }
+            else
+            {
+                display.Show("View Set Up not Supported");
+                return "Quit";
             }
 
+            return display.CommandPrompt();
 
-            display.Show("View Set Up not Supported");
-            return "Quit";
         }
 
         public View(string title, List<string> textA = null, List<string> textB = null, List<string> textC = null, List<string> textD = null,  ViewLayoutType viewLayoutType = ViewLayoutType.twoStackOneLong, int width = 100, int height = 30)
