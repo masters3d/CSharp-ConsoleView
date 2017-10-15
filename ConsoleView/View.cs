@@ -157,14 +157,14 @@ namespace ConsoleView
                     break;
             }
 		}
-
-        public string UpdateScreenAndGetInput(bool showingTitle = true)
+        public string UpdateScreenAndGetInput(int __paramLabelRequired__ = 0, bool showingTitle = true)
         {
-            UpdateScreen(showingTitle);
+            UpdateScreen(showingTitle: showingTitle);
             return display.CommandPrompt();
         }
 
-        public void UpdateScreen(bool showingTitle = true )
+        // I want to force the caller to use a named paramerter label so please excuse the __paramLabelRequired__
+        public void UpdateScreen(int __paramLabelsRequired__ = 0, bool showingTitle = true)
         {
 
             display.SetConsoleSize(this.width, this.height);
