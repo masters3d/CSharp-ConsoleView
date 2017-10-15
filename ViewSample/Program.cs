@@ -50,7 +50,7 @@ namespace ViewSample
             } while (response != "quit");
 
             view = new View(viewLayoutType: ViewLayoutType.drawOnSingleView);
-            view.UpdateScreen();
+            view.UpdateScreen(showingTitle: false);
         }
     }
 }

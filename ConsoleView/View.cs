@@ -158,19 +158,21 @@ namespace ConsoleView
             }
 		}
 
-        public string UpdateScreenAndGetInput()
+        public string UpdateScreenAndGetInput(bool showingTitle = true)
         {
-            UpdateScreen();
+            UpdateScreen(showingTitle);
             return display.CommandPrompt();
         }
 
-        public void UpdateScreen()
+        public void UpdateScreen(bool showingTitle = true )
         {
 
             display.SetConsoleSize(this.width, this.height);
 
-            display.Show(Title.PadRight(this.width), TitleTextColor, TitleBgColor);
-
+            if (showingTitle)
+            {
+                display.Show(Title.PadRight(this.width), TitleTextColor, TitleBgColor);
+            }
 
             if (type == ViewLayoutType.twoStackOneLong)
             {
