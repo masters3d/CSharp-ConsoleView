@@ -11,16 +11,12 @@ namespace ViewSample
 
             var list = new List<String>();
 
-
             var response = "";
+            View view;
 
             do
             {
-
-
-                var commands = @". Avalible Commands: single, draw, three";
-
-                View view;
+                var commands = @". Avalible Commands: single, draw, three, quit";
 
                 if (response == "single")
                 {
@@ -52,6 +48,9 @@ namespace ViewSample
                 view.display.SetConsoleTitle(commands);
 
             } while (response != "quit");
+
+            view = new View(viewLayoutType: ViewLayoutType.drawOnSingleView);
+            view.UpdateScreen();
         }
     }
 }

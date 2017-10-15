@@ -160,6 +160,12 @@ namespace ConsoleView
 
         public string UpdateScreenAndGetInput()
         {
+            UpdateScreen();
+            return display.CommandPrompt();
+        }
+
+        public void UpdateScreen()
+        {
 
             display.SetConsoleSize(this.width, this.height);
 
@@ -205,14 +211,10 @@ namespace ConsoleView
             else
             {
                 display.Show("View Set Up not Supported");
-                return "Quit";
             }
-
-            return display.CommandPrompt();
-
         }
 
-        public View(string title, List<string> textA = null, List<string> textB = null, List<string> textC = null, List<string> textD = null,  ViewLayoutType viewLayoutType = ViewLayoutType.twoStackOneLong, int width = 100, int height = 30)
+        public View(string title = "", List<string> textA = null, List<string> textB = null, List<string> textC = null, List<string> textD = null,  ViewLayoutType viewLayoutType = ViewLayoutType.twoStackOneLong, int width = 100, int height = 30)
         {
             textA = textA ?? new List<string>();
             textB = textB ?? new List<string>();
