@@ -12,8 +12,6 @@ namespace ConsoleView
         private String Title;
         private ConsoleColor TitleTextColor = ConsoleColor.White;
         private ConsoleColor TitleBgColor = ConsoleColor.DarkRed;
-        public int TitleHeight = 2;
-
         private WindowArea AreaA;
 		private WindowArea AreaB;
 		private WindowArea AreaC;
@@ -159,20 +157,22 @@ namespace ConsoleView
 		}
         public string UpdateScreenAndGetInput(int __paramLabelRequired__ = 0, bool showingTitle = true)
         {
-            UpdateScreen(showingTitle: showingTitle);
+            UpdateScreen(showingTitle: showingTitle, spaceForPrompt:1);
             return display.CommandPrompt();
         }
 
         // I want to force the caller to use a named paramerter label so please excuse the __paramLabelRequired__
-        public void UpdateScreen(int __paramLabelsRequired__ = 0, bool showingTitle = true)
+        public void UpdateScreen(int __paramLabelsRequired__ = 0, bool showingTitle = true, int spaceForPrompt = 0)
         {
+            int clearance = (showingTitle ? 1 : 0) + spaceForPrompt;
 
-            display.SetConsoleSize(this.width, this.height);
+            display.SetConsoleSize(this.width, this.height + clearance);
+
 
             if (showingTitle)
             {
                 display.Show(Title.PadRight(this.width), TitleTextColor, TitleBgColor);
-            }
+            } 
 
             if (type == ViewLayoutType.twoStackOneLong)
             {
@@ -226,7 +226,7 @@ namespace ConsoleView
             type = viewLayoutType;
             Title = title;
             this.width = width;
-            this.height = height + this.TitleHeight;
+            this.height = height;
 
             if (viewLayoutType == ViewLayoutType.twoStackOneLong)
             {

@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>0.2</PackageVersion>
+    <PackageVersion>0.2.1</PackageVersion>
     <Authors>Jose Jimenez, Quinn (Qin) Liu , Don Pham , John Gaines </Authors>
     <PackageProjectUrl>https://github.com/masters3d/CSharp-ConsoleView</PackageProjectUrl>
     <PackageTags>console, text</PackageTags>
@@ -14,7 +14,7 @@
     <PackageReleaseNotes>Initial</PackageReleaseNotes>
     <Summary>Simple C# Console View Helper</Summary>
     <Title>Console View CSharp</Title>
-    <ReleaseVersion>0.2</ReleaseVersion>
+    <ReleaseVersion>0.2.1</ReleaseVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

@@ -172,7 +172,7 @@ namespace ConsoleView
         public void Output(Display display = null)
         {
             display = display ?? new Display();
-            display.Output(Character.ToString(),BackgroundColor, TextColor);
+            display.Output(Character.ToString(),TextColor, BackgroundColor);
         }
     }
 
