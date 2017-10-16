@@ -207,7 +207,7 @@ namespace ConsoleView
             {
                 foreach (var each in AreaA.consoleBox)
                 {
-                    each.Output(display);
+                    each.Show(display);
                 }
             }
             else

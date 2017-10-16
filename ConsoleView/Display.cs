@@ -201,6 +201,10 @@ namespace ConsoleView
             }
         }
 
+        public void Show(Display display = null) {
+            Output(display);
+            Console.WriteLine();
+        }
         public void Output(Display display = null)
         {
             display = display ?? new Display();
