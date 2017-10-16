@@ -127,34 +127,42 @@ namespace ConsoleView
 			SetArea(inputList, area);
 		}
 
-        public void SetArea(List<String> inputList, Area area)
-		{
-            WindowArea areaToEdit;
-
-
-            switch (area) 
+        public void ReplaceArea(Area areToReplace, WindowArea replacement )
+        {
+            switch (areToReplace)
             {
                 case Area.A:
-                    areaToEdit = AreaA;
-                    AreaA = new WindowArea(areaToEdit.GetWidth(), areaToEdit.GetHeight(), inputList, areaToEdit.textColor, areaToEdit.bgColor);
-					break;
-				case Area.B:
-					areaToEdit = AreaB;
-                    AreaB = new WindowArea(areaToEdit.GetWidth(), areaToEdit.GetHeight(), inputList, areaToEdit.textColor, areaToEdit.bgColor);
-					break;
-				case Area.C:
-					areaToEdit = AreaC;
-                    AreaC = new WindowArea(areaToEdit.GetWidth(), areaToEdit.GetHeight(), inputList, areaToEdit.textColor, areaToEdit.bgColor);
-					break;
+                    AreaA = replacement;
+                    break;
+                case Area.B:
+                    AreaB = replacement;
+                    break;
+                case Area.C:
+                    AreaC = replacement;
+                    break;
                 case Area.D:
-                    areaToEdit = AreaD;
-                    AreaD = new WindowArea(areaToEdit.GetWidth(), areaToEdit.GetHeight(), inputList, areaToEdit.textColor, areaToEdit.bgColor);
+                    AreaD = replacement;
                     break;
                 default:
-                    areaToEdit = new WindowArea(dummyTexBox: true);
                     break;
             }
+        }
+
+        public void SetArea(List<String> inputList, Area area)
+		{
+            var areaToEdit = GetTextBox(area);
+            var editedArea = new WindowArea(areaToEdit.GetWidth(), areaToEdit.GetHeight(), inputList, areaToEdit.textColor, areaToEdit.bgColor);
+            ReplaceArea(area, editedArea );
 		}
+
+        public void SetAreaColors(Area area, ConsoleColor backgroundColor, ConsoleColor textColor)
+        {
+            var areaToEdit = GetTextBox(area);
+            areaToEdit.bgColor = backgroundColor;
+            areaToEdit.textColor = textColor;
+            ReplaceArea(area, areaToEdit); 
+        }
+
         public string UpdateScreenAndGetInput(int __paramLabelRequired__ = 0, bool showingTitle = true, int spaceForPrompt = 1)
         {
             UpdateScreen(showingTitle: showingTitle, spaceForPrompt: spaceForPrompt);
