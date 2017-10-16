@@ -155,9 +155,9 @@ namespace ConsoleView
                     break;
             }
 		}
-        public string UpdateScreenAndGetInput(int __paramLabelRequired__ = 0, bool showingTitle = true)
+        public string UpdateScreenAndGetInput(int __paramLabelRequired__ = 0, bool showingTitle = true, int spaceForPrompt = 1)
         {
-            UpdateScreen(showingTitle: showingTitle, spaceForPrompt:1);
+            UpdateScreen(showingTitle: showingTitle, spaceForPrompt: spaceForPrompt);
             return display.CommandPrompt();
         }
 
