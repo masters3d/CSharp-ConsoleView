@@ -4,14 +4,15 @@
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>0.2.2</PackageVersion>
+    <PackageVersion>0.2.3</PackageVersion>
     <Authors>Jose Jimenez, Quinn (Qin) Liu , Don Pham , John Gaines </Authors>
     <PackageProjectUrl>https://github.com/masters3d/CSharp-ConsoleView</PackageProjectUrl>
     <PackageTags>console, text</PackageTags>
     <Description>Simple C# Console View Helper</Description>
     <PackageId>ConsoleView</PackageId>
     <Owners>Jose Jimenez, Quinn (Qin) Liu , Don Pham , John Gaines </Owners>
-    <PackageReleaseNotes>This fixes some bugs around the drawing mode. </PackageReleaseNotes>
+    <PackageReleaseNotes>Added a way to change text color. 
+views can now share same display.</PackageReleaseNotes>
     <Summary>Simple C# Console View Helper</Summary>
     <Title>Console View CSharp</Title>
     <ReleaseVersion>0.2.1</ReleaseVersion>
