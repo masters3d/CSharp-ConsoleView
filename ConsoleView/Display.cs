@@ -111,12 +111,16 @@ namespace ConsoleView
             Console.ResetColor();
         }
 
-        public string CommandPrompt(string promptText = "<|: ")
+        public string CommandPrompt(string promptText = "<|: ", bool shouldClearScreen = true)
 		{
             Output(promptText);
             string result = Console.ReadLine();
             CommandHistory.Insert(0, result);
-            Console.Clear();
+            if (shouldClearScreen)
+            {
+                Console.Clear();
+
+            }
             return result;
 
 		}
@@ -133,6 +137,7 @@ namespace ConsoleView
             return inputList;
 		}
 
+        [System.Obsolete("This is experimental")]
         public static List<string> WrapText(string text, int maxWidth)
         {
             List<string> output = new List<string>();
@@ -240,6 +245,7 @@ namespace ConsoleView
             Output(display);
             Console.WriteLine();
         }
+
         public void Output(Display display = null)
         {
             display = display ?? new Display();
