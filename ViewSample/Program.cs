@@ -12,7 +12,7 @@ namespace ViewSample
             var list = new List<String>();
 
             var response = "";
-            View view;
+            View view = new View();
 
             do
             {
@@ -20,13 +20,13 @@ namespace ViewSample
 
                 if (response == "single")
                 {
-                    view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.singleView);
+                    view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.singleView, display: view.display);
                     response = view.UpdateScreenAndGetInput();
 
                     
                 } else if (response == "draw")
                 {
-                    view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.drawOnSingleView);
+                    view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.drawOnSingleView, display: view.display);
 
                     var box1 = new ConsoleBox("Camping Site", 10, 2, ConsoleColor.White, ConsoleColor.Red, 10, 2);
                     view.AddToDrawingArea(box1);
@@ -36,13 +36,19 @@ namespace ViewSample
 
                     response = view.UpdateScreenAndGetInput();
 
-                } else 
+                } else if (response == "three")
                 {
-                    view = new View("This view has two stacked areas and one side area " + commands, list, list, list, list, ViewLayoutType.twoStackOneLong);
+                    view = new View("This view has two stacked areas and one side area " + commands, list, list, list, list, ViewLayoutType.twoStackOneLong, display: view.display);
                     var height = (view.height / 2) - 1;
                     view.SetArea(view.GetCommandHistory(height), Area.A);
                     view.SetArea(view.GetCommandHistory(height), Area.C);
                     view.SetArea(view.GetCommandHistory(height), Area.B);
+                    response = view.UpdateScreenAndGetInput();
+                } else {
+                    view = new View(commands, display: view.display);
+                    view.SetAreaColors(Area.A, ConsoleColor.Yellow, ConsoleColor.Blue);
+                    view.SetAreaColors(Area.B, ConsoleColor.Blue, ConsoleColor.White);
+                    view.SetAreaColors(Area.C, ConsoleColor.DarkMagenta, ConsoleColor.White);
                     response = view.UpdateScreenAndGetInput();
                 }
                 view.display.SetConsoleTitle(commands);

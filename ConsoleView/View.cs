@@ -113,7 +113,7 @@ namespace ConsoleView
             SetArea(wrappedText, area);
         }
 
-        public void SetAreaColor(Area area, ConsoleColor backgroundColor, ConsoleColor textColor)
+        public void SetAreaColors(Area area, ConsoleColor backgroundColor, ConsoleColor textColor)
         {
             var toEdit = GetTextBox(area);
             toEdit.bgColor = backgroundColor;
@@ -160,14 +160,6 @@ namespace ConsoleView
             var editedArea = new WindowArea(areaToEdit.GetWidth(), areaToEdit.GetHeight(), inputList, areaToEdit.textColor, areaToEdit.bgColor);
             ReplaceArea(area, editedArea );
 		}
-
-        public void SetAreaColors(Area area, ConsoleColor backgroundColor, ConsoleColor textColor)
-        {
-            var areaToEdit = GetTextBox(area);
-            areaToEdit.bgColor = backgroundColor;
-            areaToEdit.textColor = textColor;
-            ReplaceArea(area, areaToEdit); 
-        }
 
         public string UpdateScreenAndGetInput(int __paramLabelRequired__ = 0, bool showingTitle = true, int spaceForPrompt = 1)
         {
@@ -230,12 +222,17 @@ namespace ConsoleView
             }
         }
 
-        public View(string title = "", List<string> textA = null, List<string> textB = null, List<string> textC = null, List<string> textD = null,  ViewLayoutType viewLayoutType = ViewLayoutType.twoStackOneLong, int width = 100, int height = 30)
+        public View(string title = "", List<string> textA = null, List<string> textB = null, List<string> textC = null, List<string> textD = null,  ViewLayoutType viewLayoutType = ViewLayoutType.twoStackOneLong, int width = 100, int height = 30, Display display = null)
         {
             textA = textA ?? new List<string>();
             textB = textB ?? new List<string>();
             textC = textC ?? new List<string>();
             textD = textD ?? new List<string>();
+
+            if (display != null)
+            {
+                this.display = display;
+            }
 
             type = viewLayoutType;
             Title = title;
