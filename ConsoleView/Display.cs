@@ -111,9 +111,9 @@ namespace ConsoleView
             Console.ResetColor();
         }
 
-        public string CommandPrompt(string promptText = "<|: ", bool shouldClearScreen = true)
+        public string CommandPrompt(string promptText = "<|: ", bool shouldClearScreen = true, ConsoleColor backgroundColor = ConsoleColor.Black, ConsoleColor textColor = ConsoleColor.White )
 		{
-            Output(promptText);
+            Output(promptText, fg: textColor, bg: backgroundColor);
             string result = Console.ReadLine();
             CommandHistory.Insert(0, result);
             if (shouldClearScreen)
