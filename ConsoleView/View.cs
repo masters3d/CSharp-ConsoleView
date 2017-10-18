@@ -94,8 +94,6 @@ namespace ConsoleView
                 toEdit[i + line] = new ConsoleText(temp);
 
             }
-
-
         }
 
         public void SetArea(String title, String input, Area area)
@@ -113,6 +111,14 @@ namespace ConsoleView
         {
             var wrappedText = Display.Wrap(input, AreaA.GetWidth());
             SetArea(wrappedText, area);
+        }
+
+        public void SetAreaColor(Area area, ConsoleColor backgroundColor, ConsoleColor textColor)
+        {
+            var toEdit = GetTextBox(area);
+            toEdit.bgColor = backgroundColor;
+            toEdit.textColor = textColor;
+            ReplaceArea(area, toEdit);
         }
 
         public void SetArea(string title, List<String> inputListToEdit, Area area, int indent = 5, bool spaceBetween = true )
