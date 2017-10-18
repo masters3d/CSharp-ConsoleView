@@ -133,7 +133,42 @@ namespace ConsoleView
             return inputList;
 		}
 
+        public static List<string> WrapText(string text, int maxWidth)
+        {
+            List<string> output = new List<string>();
 
+            var newLine = '↓';
+
+            text = text ?? "";
+            text = text.Replace('\n', newLine);
+
+            for (var i = 0; i < text.Length; i += 1)
+            {
+                if ( i + maxWidth > text.Length - 1)
+                {
+                    text.Substring(i);
+                    break;
+                }
+                var beginingOfLine = i;
+                while(text.Substring(i, 1) != " ")
+                {
+                    i -= 1;
+                    if (beginingOfLine == i)
+                    {
+                        break;
+                    }
+                }
+
+
+                //more code here
+
+            }
+            return output;
+
+
+        }
+
+        [System.Obsolete("Wrap is deprecated, please use WrapText instead.")]
 		public static List<string> Wrap(string str, int maxWidth, int upperMargin = 1, int lowerMargin = 0)
 		{
 			List<string> output = new List<string>();
