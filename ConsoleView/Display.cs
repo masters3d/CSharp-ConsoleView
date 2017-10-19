@@ -138,40 +138,54 @@ namespace ConsoleView
             return inputList;
 		}
 
-        [System.Obsolete("This is experimental")]
-        public static List<string> WrapText(string text, int maxWidth)
+        // Method adapted from https://rianjs.net/2016/03/line-wrapping-at-word-boundaries-for-console-applications-in-csharp
+        public static List<string> WrapText(string paragraph, int width)
         {
-            List<string> output = new List<string>();
+            var result = new List<string>();
 
-            var newLine = '↓';
-
-            text = text ?? "";
-            text = text.Replace('\n', newLine);
-
-            for (var i = 0; i < text.Length; i += 1)
+            if (string.IsNullOrWhiteSpace(paragraph))
             {
-                if ( i + maxWidth > text.Length - 1)
+                return result;
+            }
+            var placeHolder = '↓';
+            paragraph = paragraph.Replace('\n', placeHolder);
+            char[] splitOn = { placeHolder, };
+            string[] splitParagraph = paragraph.Split(splitOn);
+
+            foreach (string para in splitParagraph)
+            {
+                int approxLineCount = para.Length / width;
+                var lines = new List<string>();
+
+                if (para.Length == 0)
                 {
-                    text.Substring(i);
-                    break;
+                    result.Add("");
                 }
-                var beginingOfLine = i;
-                while(text.Substring(i, 1) != " ")
+
+                for (var i = 0; i < para.Length;)
                 {
-                    i -= 1;
-                    if (beginingOfLine == i)
+                    int grabLimit = Math.Min(width, para.Length - i);
+                    string line = para.Substring(i, grabLimit);
+
+                    var isLastChunk = grabLimit + i == para.Length;
+
+                    if (isLastChunk)
                     {
-                        break;
+                        i = i + grabLimit;
+                        lines.Add(line);
+                    }
+                    else
+                    {
+                        var lastSpace = line.LastIndexOf(" ", StringComparison.Ordinal);
+                        lines.Add(line.Substring(0, lastSpace));
+
+                        //Trailing spaces needn't be displayed as the first character on the new line
+                        i = i + lastSpace + 1;
                     }
                 }
-
-
-                //more code here
-
+                result.AddRange(lines);
             }
-            return output;
-
-
+            return result;
         }
 
         [System.Obsolete("Wrap is deprecated, please use WrapText instead.")]
@@ -281,7 +295,7 @@ namespace ConsoleView
             this.positionY = positionY;
 
             List<ConsoleText> listToSave = new List<ConsoleText>();
-            var wrappedTextList = Display.Wrap(text, width);
+            var wrappedTextList = Display.WrapText(text, width);
 
             for (var i = 0; i < height; i += 1)
             {

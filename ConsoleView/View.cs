@@ -99,8 +99,8 @@ namespace ConsoleView
 
         public void SetArea(String title, String input, Area area)
         {
-            var toDisplay1 =  Display.Wrap(title, GetTextBox(area).GetWidth());
-            var toDisplay2 = Display.Indent(5, Display.Wrap(input, GetTextBox(area).GetWidth() - 5));
+            var toDisplay1 =  Display.WrapText(title, GetTextBox(area).GetWidth());
+            var toDisplay2 = Display.Indent(5, Display.WrapText(input, GetTextBox(area).GetWidth() - 5));
 
             toDisplay1.AddRange(toDisplay2);
 
@@ -110,7 +110,7 @@ namespace ConsoleView
 
         public void SetArea(string input, Area area)
         {
-            var wrappedText = Display.Wrap(input, AreaA.GetWidth());
+            var wrappedText = Display.WrapText(input, AreaA.GetWidth());
             SetArea(wrappedText, area);
         }
 
