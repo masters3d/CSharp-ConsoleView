@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace ConsoleView
 {
+    [Serializable]
     public class Display
     {
         public string LastShow = " ";
@@ -203,6 +204,7 @@ namespace ConsoleView
 		}
     }
 
+    [Serializable]
     public struct ConsoleChar
     {
        public ConsoleColor BackgroundColor;
@@ -216,6 +218,7 @@ namespace ConsoleView
         }
     }
 
+    [Serializable]
     public struct ConsoleText
     {
         public List<ConsoleChar> list;
@@ -258,6 +261,7 @@ namespace ConsoleView
 
     }
 
+    [Serializable]
     public struct ConsoleBox
     {
         public int positionX;

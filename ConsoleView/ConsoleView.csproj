@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>0.2.4</PackageVersion>
+    <PackageVersion>0.2.5</PackageVersion>
     <Authors>Jose Jimenez, Quinn (Qin) Liu , Don Pham , John Gaines </Authors>
     <PackageProjectUrl>https://github.com/masters3d/CSharp-ConsoleView</PackageProjectUrl>
     <PackageTags>console, text</PackageTags>
     <Description>Simple C# Console View Helper</Description>
     <PackageId>ConsoleView</PackageId>
     <Owners>Jose Jimenez, Quinn (Qin) Liu , Don Pham , John Gaines </Owners>
-    <PackageReleaseNotes>Added a way to change the prompt color</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated to core 2 and made everything   [Serializable] </PackageReleaseNotes>
     <Summary>Simple C# Console View Helper</Summary>
     <Title>Console View CSharp</Title>
     <ReleaseVersion>0.2.1</ReleaseVersion>

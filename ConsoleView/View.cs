@@ -5,6 +5,7 @@ using ConsoleView;
 
 namespace ConsoleView
 {
+    [Serializable]
     public class View
     {
         public Display display = new Display();
@@ -270,7 +271,7 @@ namespace ConsoleView
         }
     }
 }
-
+[Serializable]
 public struct WindowArea
 {
     private int width;
