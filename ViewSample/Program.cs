@@ -8,6 +8,38 @@ namespace ViewSample
     {
         static void Main(string[] args)
         {
+            var template =
+    @"
+                                                                       
+                                                                       
+                                                                       
+                                                                       
+                                                                       
+      +---------------------------------------------------------+      
+      |                                                         |      
+      |                                                         |      
+      |     +--------------------+  +--------------------+      |      
+      |     |                    |  |                    |      |      
+      |     +--------------------+  +--------------------+      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     |                    |  |                    |      |      
+      |     +--------------------+  +--------------------+      |      
+      |                                                         |      
+      +---------------------------------------------------------+       
+";
+
+
 
             var list = new List<String>();
 
@@ -21,6 +53,7 @@ namespace ViewSample
                 if (response == "single")
                 {
                     view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.singleView, display: view.display);
+                    view.SetArea(template, Area.A);
                     response = view.UpdateScreenAndGetInput();
 
                     

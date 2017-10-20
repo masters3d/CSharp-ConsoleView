@@ -147,9 +147,10 @@ namespace ConsoleView
             {
                 return result;
             }
-            var placeHolder = '↓';
-            paragraph = paragraph.Replace('\n', placeHolder);
-            char[] splitOn = { placeHolder, };
+
+            paragraph = paragraph.Replace("\r\n", "↓");
+            paragraph = paragraph.Replace('\n', '↓');
+            char[] splitOn = { '↓', };
             string[] splitParagraph = paragraph.Split(splitOn);
 
             foreach (string para in splitParagraph)
@@ -159,7 +160,7 @@ namespace ConsoleView
 
                 if (para.Length == 0)
                 {
-                    result.Add("");
+                    result.Add("".PadRight(width));
                 }
 
                 for (var i = 0; i < para.Length;)
@@ -172,7 +173,7 @@ namespace ConsoleView
                     if (isLastChunk)
                     {
                         i = i + grabLimit;
-                        lines.Add(line);
+                        lines.Add(line.PadRight(width));
                     }
                     else
                     {
