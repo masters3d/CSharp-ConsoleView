@@ -4,14 +4,14 @@
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>0.2.6</PackageVersion>
+    <PackageVersion>0.2.7</PackageVersion>
     <Authors>Jose Jimenez, Quinn (Qin) Liu , Don Pham , John Gaines </Authors>
     <PackageProjectUrl>https://github.com/masters3d/CSharp-ConsoleView</PackageProjectUrl>
     <PackageTags>console, text</PackageTags>
     <Description>Simple C# Console View Helper</Description>
     <PackageId>ConsoleView</PackageId>
     <Owners>Jose Jimenez, Quinn (Qin) Liu , Don Pham , John Gaines </Owners>
-    <PackageReleaseNotes>Swapped out the TextWrap function</PackageReleaseNotes>
+    <PackageReleaseNotes>@"" string inserts windows style new lines which was unexpected. This release handles these better.</PackageReleaseNotes>
     <Summary>Simple C# Console View Helper</Summary>
     <Title>Console View CSharp</Title>
     <ReleaseVersion>0.2.1</ReleaseVersion>
