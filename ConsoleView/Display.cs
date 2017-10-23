@@ -126,16 +126,66 @@ namespace ConsoleView
 
 		}
 
-        public static List<String> Indent(int indentAmmount, List<String> list)
+        public static List<String> Zip(List<String> listA, List<String> listB)
         {
-			var inputList = new List<String>();
+            listA = listA ?? new List<string>();
+            listB = listB ?? new List<string>();
 
-			foreach (var each in list)
-			{
-				inputList.Add(new string(' ', indentAmmount) + each);
-			}
+            int widthA = listA.Count > 0 ? listA[0].Length : 0;
+            int widthB = listB.Count > 0 ? listB[0].Length : 0;
+ 
+
+            var result = new List<string>();
+
+            var max = Math.Max(listA.Count, listB.Count);
+
+            for (var i = 0; i < max; i += 1)
+            {
+                var each = "";
+
+                if ( listA.Count == 0 || i > listA.Count - 1) 
+                {
+                    each += new string(' ', widthA);
+                } else 
+                {
+                    each += listA[i];
+                }
+
+                if (listB.Count == 0 || i > listB.Count - 1)
+                {
+                    each += new string(' ', widthB);
+                }
+                else
+                {
+                    each += listB[i];
+                }
+
+                result.Add(each);
+            }
+            return result;
+        }
+
+        // PadLeft
+        // PadRigh
+        public static List<String> InsertMargins(List<String> list, int leftmargin = 0, int rightmargin = 0, Char spacing = ' ' )
+        {
+            var inputList = new List<String>();
+            leftmargin = leftmargin < 0 ? 0 : leftmargin;
+            rightmargin = rightmargin < 0 ? 0 : rightmargin;
+
+            foreach (var each in list)
+            {
+                
+                inputList.Add(new string(spacing, leftmargin) + each + new string(spacing, rightmargin));
+            }
 
             return inputList;
+        }
+
+        [System.Obsolete("Indent is deprecated, please use InsertMargins instead.")]
+        public static List<String> Indent(int indentAmmount, List<String> list)
+        {
+            return InsertMargins(list, indentAmmount);
 		}
 
         // Method adapted from https://rianjs.net/2016/03/line-wrapping-at-word-boundaries-for-console-applications-in-csharp

@@ -39,16 +39,62 @@ namespace ViewSample
       +---------------------------------------------------------+       
 ";
 
+            string fox = @"
+                                       
+       ((                    ,(/       
+       /(((,               /(((/       
+       ///(((/           (((////       
+       //////(((       (((//////       
+       /////(((((((((((((((/////       
+       /(((((((((((((((((((((((/       
+       ((((/./(((((((((((*.(((((       
+       (((/   *(((((((((.   ((((       
+     .@(((/   *(((((((((.   ((((@      
+    ,@@@&((/ *(((((((((((, /((@@@@     
+   /@@@@@@@@(((((((((((((((@@@@@@@@.   
+      @@@@@@@@@(((((((((@@@@@@@@@      
+    ,@@@@@@@@@@&(((((((@@@@@@@@@@@     
+             .@@(((((((@@              
+              %@#     @@,              
+              #@@@. *@@@.              
+               @@@@@@@@&               
+                 (@@@*   
+                              
+";
+        string deer = @"
+                                       
+         /#  %.  %                     
+      *  (#./%(#%,                     
+      %( (%                            
+       ((##                            
+    ,(( (((((                          
+  .((((((((((((                ((      
+  /((((((((((((((.             ((      
+        /@@@(((((((((((((((((((((.     
+         %@@@((((((((((((((((((((((    
+          @@@(((((((((((((((((((((((   
+           (((((((((((((((((((((((((   
+            *(((((@@@@@@@@@@#(((((((   
+              /(((          **((((((   
+              /(((          ****(((((  
+              /((           ***   (((  
+              /((          ,**    /((  
+              /((          **     /((  
+              /((         **      /((    
+";
+
 
 
             var list = new List<String>();
 
             var response = "";
             View view = new View();
+            Random random = new Random();
+
 
             do
             {
-                var commands = @". Avalible Commands: single, draw, three, quit";
+                var commands = @". Avalible Commands: single, animate, draw, three, quit";
 
                 if (response == "single")
                 {
@@ -57,7 +103,20 @@ namespace ViewSample
                     response = view.UpdateScreenAndGetInput();
 
                     
-                } else if (response == "draw")
+                } else if (response == "animate")
+                {
+                    view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.singleView, display: view.display);
+                    var randomNumber1 = random.Next(0, (view.width - 80) / 2);
+                    var randomNumber2 = random.Next(0, (view.width - 80) / 2);
+                                        var deerList = Display.InsertMargins(Display.WrapText(deer, 40), rightmargin: randomNumber1);
+                    var foxList = Display.InsertMargins(Display.WrapText(fox, 40), randomNumber2);
+
+                    view.SetArea(Display.Zip(deerList, foxList), Area.A);
+                    response = view.UpdateScreenAndGetInput();
+                                                         
+
+                }
+                else if (response == "draw")
                 {
                     view = new View("This is a single view" + commands, viewLayoutType: ViewLayoutType.drawOnSingleView, display: view.display);
 
