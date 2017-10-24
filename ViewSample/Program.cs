@@ -130,7 +130,7 @@ namespace ViewSample
 
                 } else if (response == "three")
                 {
-                    view = new View("This view has two stacked areas and one side area " + commands, list, list, list, list, ViewLayoutType.twoStackOneLong, display: view.display);
+                    view = new View("Two stacked areas and one side area " + commands, list, list, list, list, ViewLayoutType.twoStackOneLong, display: view.display);
                     var height = (view.height / 2) - 1;
                     view.SetArea(view.GetCommandHistory(height), Area.A);
                     view.SetArea(view.GetCommandHistory(height), Area.C);

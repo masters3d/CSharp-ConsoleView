@@ -9,6 +9,8 @@ namespace ConsoleView
     public class Display
     {
         public string LastShow = " ";
+        public ConsoleColor textColor = ConsoleColor.White;
+        public ConsoleColor backgroundColor = ConsoleColor.Black;
         public List<String> CommandHistory = new List<String>();
 
 
@@ -85,16 +87,19 @@ namespace ConsoleView
             LastShow = text;
         }
 
-        public void Show(string text, ConsoleColor txColor = ConsoleColor.White, ConsoleColor bg = ConsoleColor.Black)
+        public void Show(string text, ConsoleColor? txColor = null, ConsoleColor? bg = null)
         {
-			Console.BackgroundColor = bg;
-			Console.ForegroundColor = txColor;
+            Console.BackgroundColor = bg ?? this.backgroundColor;
+            Console.ForegroundColor = txColor ?? this.textColor;
             WriteLine(text);
             Console.ResetColor();
         }
 
-        public void Show(List<string> textList, ConsoleColor txColor = ConsoleColor.Green, ConsoleColor bg = ConsoleColor.Black)
+        public void Show(List<string> textList, ConsoleColor? txColor = null, ConsoleColor? bg = null)
         {
+            txColor = txColor ?? this.textColor;
+            bg = bg ?? this.backgroundColor;
+
             string temp = "";
             foreach (string key in textList)
             {
@@ -104,17 +109,17 @@ namespace ConsoleView
             Show(temp, txColor, bg);
         }
 
-        public void Output(string text, ConsoleColor fg = ConsoleColor.White, ConsoleColor bg = ConsoleColor.Black)
+        public void Output(string text, ConsoleColor? fg = null, ConsoleColor? bg = null)
         {
-            Console.BackgroundColor = bg;
-            Console.ForegroundColor = fg;
+            Console.BackgroundColor = bg ?? this.backgroundColor;
+            Console.ForegroundColor = fg ?? this.textColor;
             Write(text);
             Console.ResetColor();
         }
 
-        public string CommandPrompt(string promptText = "<|: ", bool shouldClearScreen = true, ConsoleColor backgroundColor = ConsoleColor.Black, ConsoleColor textColor = ConsoleColor.White )
+        public string CommandPrompt(string promptText = "<|: ", bool shouldClearScreen = true, ConsoleColor? bgColor = null, ConsoleColor? txtColor = null )
 		{
-            Output(promptText, fg: textColor, bg: backgroundColor);
+            Output(promptText, fg: txtColor ?? this.textColor, bg: bgColor ?? this.backgroundColor);
             string result = Console.ReadLine();
             CommandHistory.Insert(0, result);
             if (shouldClearScreen)
